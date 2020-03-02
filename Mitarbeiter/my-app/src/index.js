@@ -7,7 +7,7 @@ class NameForm extends React.Component {
 		return(
 			<form>
 				<p> Dein Name: <br />
-				<input type="text"/>
+				<input type="text" />
 				</p>
 			</form>)
 	}
@@ -24,12 +24,24 @@ class RatingsForm extends React.Component {
 	}
 }
 
+class SubmitButton extends React.Component {
+	render() {
+		return(
+			<form>
+				<p>
+				<input type="submit" value="absenden"/>
+				</p>
+			</form>)
+	}
+}
+
 console.log("Dies ist ein TestLog");
 
 ReactDOM.render(
 	<div>
 		<NameForm />
 		<RatingsForm />
+		<SubmitButton />
 	</div>,
 	document.getElementById('root')
 );
