@@ -24,6 +24,17 @@ class RatingsForm extends React.Component {
 	}
 }
 
+class CommentForm extends React.Component {
+	render() {
+		return(
+			<form>
+				<p> Sonstiges: <br />
+				<input type="text" />
+				</p>
+			</form>)
+	}
+}
+
 class SubmitButton extends React.Component {
 	render() {
 		return(
@@ -39,8 +50,10 @@ console.log("Dies ist ein TestLog");
 
 ReactDOM.render(
 	<div>
+		<h1> Feedback </h1>
 		<NameForm />
 		<RatingsForm />
+		<CommentForm />
 		<SubmitButton />
 	</div>,
 	document.getElementById('root')
