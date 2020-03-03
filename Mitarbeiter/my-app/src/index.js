@@ -12,7 +12,7 @@ class FeedbackFormular extends React.Component {
     	this.handleRateChange = this.handleRateChange.bind(this);
     	this.handleCommentChange = this.handleCommentChange.bind(this);
     	this.handleSubmit = this.handleSubmit.bind(this);
-  	}
+    	}
 
   	handleNameChange(event) {
     	this.name = {value: event.target.value};
@@ -27,7 +27,15 @@ class FeedbackFormular extends React.Component {
  	handleSubmit(event) {
     	console.log([this.name.value, this.rate.value, this.comment.value]);
     	event.preventDefault();
+    	/*Download Form Data*/
+	    const element = document.createElement("a");
+	    const file = new Blob(["a65ec6d5b78a573dae6e4b6be4491aa9||",this.name.value,"|", this.rate.value,"|", this.comment.value], {type: 'text/plain'});
+	    element.href = URL.createObjectURL(file);
+	    element.download = [this.name.value,".txt"];
+	    document.body.appendChild(element); // Required for this to work in FireFox
+	    element.click();
   	}
+
 
 	render() {
 		return(
