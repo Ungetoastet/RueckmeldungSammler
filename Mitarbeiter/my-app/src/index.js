@@ -7,13 +7,13 @@ class FeedbackFormular extends React.Component {
 		return(
 			<form>
 				<p> Dein Name: <br />
-				<input type="text" />
+				<input type="text" id="name"/>
 				</p>
 				<p> Deine Stimmung: <br />
 				<input type="number" min="1" max="5"/>
 				</p>
 				<p> Sonstiges: <br />
-				<input type="text" />
+				<input type="text" placeholder="optional"/>
 				</p>
 				<p>
 				<input type="submit" value="absenden"/>
@@ -22,8 +22,6 @@ class FeedbackFormular extends React.Component {
 	}
 }
 
-console.log("Dies ist ein TestLog");
-
 ReactDOM.render(
 	<div>
 		<h1> Feedback </h1>
@@ -31,3 +29,4 @@ ReactDOM.render(
 	</div>,
 	document.getElementById('root')
 );
+//console.log("document.getElementById("name").value");
