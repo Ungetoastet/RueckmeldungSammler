@@ -5,18 +5,27 @@ import './index.css';
 class FeedbackFormular extends React.Component {
 	constructor(props) {
     	super(props);
-    	this.state = {value: ''};
-    	this.handleChange = this.handleChange.bind(this);
+    	this.name = {defaultValue: ' '};
+    	this.rate = {defaultValue: ' '};
+    	this.comment = {defaultValue: ' '};
+    	this.handleNameChange = this.handleNameChange.bind(this);
+    	this.handleRateChange = this.handleRateChange.bind(this);
+    	this.handleCommentChange = this.handleCommentChange.bind(this);
     	this.handleSubmit = this.handleSubmit.bind(this);
   	}
 
-  	handleChange(event) {
-    	this.setState({value: event.target.value});
+  	handleNameChange(event) {
+    	this.name = {value: event.target.value};
+  	}
+  	handleRateChange(event) {
+    	this.rate = {value: event.target.value};
+  	}
+  	handleCommentChange(event) {
+    	this.comment = {value: event.target.value};
   	}
 
-  handleSubmit(event) {
-    	alert('A name was submitted: ' + this.state.value);
-    	console.log([this.state.value])
+ 	handleSubmit(event) {
+    	console.log([this.name.value, this.rate.value, this.comment.value]);
     	event.preventDefault();
   	}
 
@@ -25,17 +34,17 @@ class FeedbackFormular extends React.Component {
 			<form onSubmit={this.handleSubmit}>
 				{/* Name Input */}
 				<p> Dein Name: <br />
-				<input type="text" value={this.state.value} onChange={this.handleChange}/>
+				<input type="text" defaultValue={this.name.value} onChange={this.handleNameChange}/>
 				</p>
 
 				{/* Rating Input */}
 				<p> Deine Stimmung: <br />
-				<input type="number" min="1" max="5"/>
+				<input type="number" min="1" max="5" defaultValue={this.rate.value} onChange={this.handleRateChange}/>
 				</p>
 
 				{/* Comment Input */}
 				<p> Sonstiges: <br />
-				<input type="text" placeholder="optional"/>
+				<input type="text" placeholder="optional" defaultValue={this.comment.value} onChange={this.handleCommentChange}/>
 				</p>
 
 				{/* Submit Button */}
