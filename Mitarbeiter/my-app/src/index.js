@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import './index.css';
+import Leiter from './leiter.js'
+import Erklaerung from './erklaerung.js'
 
 class FeedbackFormular extends React.Component {
 	constructor(props) {
@@ -33,13 +36,14 @@ class FeedbackFormular extends React.Component {
 	    element.href = URL.createObjectURL(file);
 	    element.download = [this.name.value,".txt"];
 	    document.body.appendChild(element); // Required for this to work in FireFox
-	    element.click();
+	    element.click();			
   	}
 
 
 	render() {
 		return(
 			<form onSubmit={this.handleSubmit}>
+				<div><h1>Feedback - Mitabeiter</h1></div>
 				{/* Name Input */}
 				<p> Dein Name: <br />
 				<input type="text" defaultValue={this.name.value} onChange={this.handleNameChange}/>
@@ -57,16 +61,34 @@ class FeedbackFormular extends React.Component {
 
 				{/* Submit Button */}
 				<p>
-				<input type="submit" value="absenden"/>
+				<input type="submit" value="absenden" style={ButtonStyle1}/>
 				</p>
 			</form>)
 	}
 }
+const ButtonStyle1 = {
+	height: "30px",
+	width: "150px",
+	color: "blue",
+	fontsize: "50px"
+};
 
-ReactDOM.render(
-	<div>
-		<h1> Feedback </h1>
-		<FeedbackFormular />
-	</div>,
+const routing = (
+  <Router>
+    <div>
+      	<p><Link to="/"><button style={ButtonStyle1}>Mitabeiter Voting</button></Link></p>
+      	<p><Link to="/leiter.js"><button style={ButtonStyle1}>Projektleiter Übersicht</button></Link></p>
+		<p><Link to="/erklaerung.js"><button style={ButtonStyle1}>Einführung</button></Link></p>
+      	<Route exact path="/" component={FeedbackFormular} />
+      	<Route path="/leiter" component={Leiter} />
+      	<Route path="/erklaerung" component={Erklaerung} />
+    </div>
+  </Router>
+)
+
+ReactDOM.render([
+	routing],
 	document.getElementById('root')
 );
+
+export default FeedbackFormular
