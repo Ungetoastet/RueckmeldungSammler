@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom'
 import './index.css';
-import Leiter from './leiter.js'
 import Erklaerung from './erklaerung.js'
+import Leiter from './leiter.js'
 
 class FeedbackFormular extends React.Component {
 	constructor(props) {
@@ -75,13 +75,15 @@ const ButtonStyle1 = {
 
 const routing = (
   <Router>
-    <div>
+    <div><nav>
       	<p><Link to="/"><button style={ButtonStyle1}>Mitabeiter Voting</button></Link></p>
       	<p><Link to="/leiter.js"><button style={ButtonStyle1}>Projektleiter Übersicht</button></Link></p>
-		<p><Link to="/erklaerung.js"><button style={ButtonStyle1}>Einführung</button></Link></p>
+		<p><Link to="/erklaerung.js"><button style={ButtonStyle1}>Einführung</button></Link></p> </nav>
+		<Switch>
       	<Route exact path="/" component={FeedbackFormular} />
-      	<Route path="/leiter" component={Leiter} />
-      	<Route path="/erklaerung" component={Erklaerung} />
+      	<Route exact path="/leiter.js"> <Leiter /> </Route>
+      	<Route exact path="/erklaerung.js"> <Erklaerung /> </Route> 
+      	</Switch>
     </div>
   </Router>
 )
