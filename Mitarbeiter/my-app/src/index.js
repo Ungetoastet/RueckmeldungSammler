@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom'
+import Button from "@material-ui/core/Button";
 import './index.css';
 import Erklaerung from './erklaerung.js'
 import Leiter from './leiter.js'
@@ -61,24 +62,18 @@ class FeedbackFormular extends React.Component {
 
 				{/* Submit Button */}
 				<p>
-				<input type="submit" value="absenden" style={ButtonStyle1}/>
+				<Button type="submit" value="absenden" variant="contained" color="Secondary"> Absenden </Button>
 				</p>
 			</form>)
 	}
 }
-const ButtonStyle1 = {
-	height: "30px",
-	width: "150px",
-	color: "blue",
-	fontsize: "50px"
-};
 
 const routing = (
   <Router>
     <div><nav>
-      	<p><Link to="/"><button style={ButtonStyle1}>Mitabeiter Voting</button></Link></p>
-      	<p><Link to="/leiter.js"><button style={ButtonStyle1}>Projektleiter Übersicht</button></Link></p>
-		<p><Link to="/erklaerung.js"><button style={ButtonStyle1}>Einführung</button></Link></p> </nav>
+      	<p><Link to="/"><Button variant="contained" color="Secondary">Mitabeiter Voting</Button></Link></p>
+      	<p><Link to="/leiter.js"><Button variant="contained" color="Secondary">Projektleiter Übersicht</Button></Link></p>
+		<p><Link to="/erklaerung.js"><Button variant="contained" color="Secondary">Einführung</Button></Link></p> </nav>
 		<Switch>
       	<Route exact path="/" component={FeedbackFormular} />
       	<Route exact path="/leiter.js"> <Leiter /> </Route>
