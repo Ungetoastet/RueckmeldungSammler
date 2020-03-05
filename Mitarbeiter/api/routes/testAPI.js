@@ -16,12 +16,13 @@ router.get("/SaveFormGet", function(req, res, next) {
     SaveFile(name + "|" + rate + "|" + comment + "|-|");
 });
 
-router.post("/SaveFormPost",function(req){
+router.post("/SaveFormPost",function(req, res){
     var FormData = req.body.name + req.body.rate + req.body.comment;
     console.log(req.body);
     console.log("<<<Data recieved from client<<<")
-    //SaveFile(" | ", req.body.name, " - ",req.body.rate, " - ",req.body.comment);
-    SaveFile("Hi");
+    SaveFile(" | " + req.body.name + " - " + req.body.rate + " - " + req.body.comment);
+    //SaveFile("Hi");
+    res.end();
 });
 
 router.get("/ShowData", function(req, res){

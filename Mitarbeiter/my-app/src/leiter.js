@@ -9,11 +9,17 @@ export default class Leiter extends React.Component {
 			.then(res => this.setState({ apiResponse: res }))
 			.catch(err => err);
 	}
-	callAPIForOpening(event) {
-		fetch("http://localhost:2999/testAPI/ShowData")
-			.then(res => this.res)
-			.catch(err => err);
-		
+	callAPIForOpening = () => {
+		fetch('http://localhost:8080/employees/download')
+			.then(response => {
+				response.blob().then(blob => {
+					let url = window.URL.createObjectURL(blob);
+					let a = document.createElement('a');
+					a.href = url;
+					a.download = 'employees.json';
+					a.click();
+				});
+			})
 	}
 	render(){
 		return(
