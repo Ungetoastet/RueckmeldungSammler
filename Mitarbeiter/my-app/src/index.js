@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom'
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, Slider } from "@material-ui/core";
 import './index.css';
-import Erklaerung from './erklaerung.js'
 import Leiter from './leiter.js'
+var bodyParser = require("body-parser");
 
 class FeedbackFormular extends React.Component {
 	constructor(props) {
@@ -30,15 +30,8 @@ class FeedbackFormular extends React.Component {
   	}
 
  	handleSubmit(event) {
-    	console.log([this.name.value, this.rate.value, this.comment.value]);
-    	event.preventDefault();
-    	/*Download Form Data*/
-	    const element = document.createElement("a");
-	    const file = new Blob(["(SurveyIDPlaceholder)|",this.name.value,"|", this.rate.value,"|", this.comment.value], {type: 'text/plain'});
-	    element.href = URL.createObjectURL(file);
-	    element.download = [this.name.value,".txt"];
-	    document.body.appendChild(element); // Required for this to work in FireFox
-	    element.click();			
+    	event.preventDefault();	
+		this.callAPIForSave();	
   	}
 	
 	callAPI() {
@@ -46,9 +39,28 @@ class FeedbackFormular extends React.Component {
 			.then(res => res.text())
 			.then(res => this.setState({ apiResponse: res }))
 			.catch(err => err);
+		if (this.state.apiResponse === ""){
+			this.state={value: "API not working!"};
+		}
+		console.log(">API Connected<");
 	}
 	
-	componentWillMount() {
+	callAPIForSave() {
+		fetch("http://localhost:2999/testAPI/SaveFormPost", {
+			method: "POST",
+			headers: {
+				"Accept": "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: this.name.value,
+				rate: this.rate.value,
+				comment: this.comment.value,
+			}),
+		})
+		}
+
+	UNSAFE_componentWillMount() {
 		this.callAPI();
 	}
 
@@ -63,7 +75,8 @@ class FeedbackFormular extends React.Component {
 
 				{/* Rating Input */}
 				<p> Deine Stimmung: <br /><br />
-				<TextField type="number" min="1" max="5" defaultValue={this.rate.value} onChange={this.handleRateChange} variant="outlined" label="Min: 1 | Max: 5"/>
+				<TextField type="number" inputProps={{ min: "1", max: "5", step: "1" }} defaultValue={this.rate.value} onChange={this.handleRateChange} variant="outlined" label="Rating"/>
+				{/*<Slider color="secondary" width={200} defaultValue={30} aria-labelledby="discrete-slider" valueLabelDisplay="auto" step={1} min={1} max={5} onChange={this.handleRateChange}/>*/}
 				</p>
 
 				{/* Comment Input */}
@@ -74,7 +87,7 @@ class FeedbackFormular extends React.Component {
 				{/* Submit Button */}
 				<p>
 				<Button type="submit" value="absenden" variant="contained" color="Secondary"> Absenden </Button>
-				</p>
+				</p>			
 				<p className="App-intro"><small>{this.state.apiResponse}</small></p>
 			</form>
 		)
@@ -91,15 +104,22 @@ const routing = (
 		<Switch>
       	<Route exact path="/" component={FeedbackFormular} />
       	<Route exact path="/leiter.js"> <Leiter /> </Route>
-      	<Route exact path="/erklaerung.js"> <Erklaerung /> </Route> 
       	</Switch>
     </div>
   </Router>
 )
 
 ReactDOM.render([
-	routing],
+	routing,
+	],
 	document.getElementById('root')
 );
+
+export function callAPIForDelete() {
+	fetch("http://localhost:2999/testAPI/Delete")
+		.then(res => res.text())
+		.then(res => this.setState({ apiResponse: res }))
+		.catch(err => err);
+}
 
 export default FeedbackFormular
