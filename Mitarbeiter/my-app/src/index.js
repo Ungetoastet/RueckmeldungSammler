@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useLocation, Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom'
-import { Button, makeStyles, TextField } from "@material-ui/core";
+import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Button, TextField } from "@material-ui/core";
 import './index.css';
 import Erklaerung from './erklaerung.js'
 import Leiter from './leiter.js'
 
 class FeedbackFormular extends React.Component {
 	constructor(props) {
-    	super(props);
+		super(props);
+		this.state = { apiResponse: "" };
     	this.name = {defaultValue: ' '};
     	this.rate = {defaultValue: ' '};
     	this.comment = {defaultValue: ' '};
@@ -39,6 +40,17 @@ class FeedbackFormular extends React.Component {
 	    document.body.appendChild(element); // Required for this to work in FireFox
 	    element.click();			
   	}
+	
+	callAPI() {
+		fetch("http://localhost:2999/testAPI")
+			.then(res => res.text())
+			.then(res => this.setState({ apiResponse: res }))
+			.catch(err => err);
+	}
+	
+	componentWillMount() {
+		this.callAPI();
+	}
 
 	render() {
 		return(
@@ -63,6 +75,7 @@ class FeedbackFormular extends React.Component {
 				<p>
 				<Button type="submit" value="absenden" variant="contained" color="Secondary"> Absenden </Button>
 				</p>
+				<p className="App-intro"><small>{this.state.apiResponse}</small></p>
 			</form>
 		)
 	}

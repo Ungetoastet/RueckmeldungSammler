@@ -11,6 +11,15 @@ Auf der Webseite werden sie dann gefragt ihr aktuelles Stimmungsbild mit 1-5 Ste
 Der Projektleiter kann sich danach das Stimmungsbild der Mitarbeiter anzeigen lassen.
 
 ## Installation:
+### Api (cd api/):
+Pakete installieren:
+	npm install
+	npm install --save cors
+
+Api checken:
+http://localhost:2999/testAPI
+
+### Client (cd my-app/):
 Folgende Packete müssen installiert werden:
 	npm install react
 	npm install react-dom
@@ -19,7 +28,7 @@ Folgende Packete müssen installiert werden:
 
 Zum Ausführen:
 	cd Mitarbeiter/
-	cd my-app
+	cd my-app/
 	npm start
 
 Falls "EACCES: Permission denied...", dann:
@@ -30,3 +39,6 @@ Falls "EACCES: Permission denied...", dann:
 Und erneut Versuchen:
 	cd ..
 	npm start
+
+Client benutzen:
+http://localhost:3000
