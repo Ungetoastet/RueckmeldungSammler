@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom'
-import { Button, TextField, Slider } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import './index.css';
 import Leiter from './leiter.js'
-var bodyParser = require("body-parser");
+
 
 class FeedbackFormular extends React.Component {
 	constructor(props) {
@@ -34,15 +34,29 @@ class FeedbackFormular extends React.Component {
 		this.callAPIForSave();			
   	}
 	
-	callAPI() {
+	checkAPI() {
 		fetch("http://localhost:2999/testAPI")
 			.then(res => res.text())
 			.then(res => this.setState({ apiResponse: res }))
 			.catch(err => err);
-		if (this.state.apiResponse === ""){
-			this.state={value: "API not working!"};
-		}
-		console.log(">API Connected<");
+		fetch("http://localhost:2999/testAPI")
+			.then(function(res){
+				if(res.ok){
+					console.log("<<<API Connected>>>");
+				}
+				else{
+					console.log("|||API connection failed|||");
+					alert("Es konnte keine Verbindung zur API hergestellt werden. Die Verbindung wird erneut versucht. Error: (C0oLx4u553h3nd3eRxC0D3)");
+					window.location.reload();
+				}
+			})
+			.catch(function (error){
+				if(error){
+					console.log("|||API connection failed|||");
+					alert("Es konnte keine Verbindung zur API hergestellt werden. Die Verbindung wird erneut versucht. Error: (C0oLx4u553h3nd3eRxC0D3)");
+					window.location.reload();
+				}
+			})
 	}
 	
 	callAPIForSave() {
@@ -64,12 +78,13 @@ class FeedbackFormular extends React.Component {
 	}
 
 	UNSAFE_componentWillMount() {
-		this.callAPI();
+		this.checkAPI();
 	}
 
 	render() {
 		return(
 			<form onSubmit={this.handleSubmit}>
+				<p className="App-intro"><small>{this.state.apiResponse}</small></p>
 				<div><h1>Feedback - Mitabeiter</h1></div>
 				{/* Name Input */}
 				<p> Dein Name: <br /><br />
@@ -79,7 +94,6 @@ class FeedbackFormular extends React.Component {
 				{/* Rating Input */}
 				<p> Deine Stimmung: <br /><br />
 				<TextField type="number" inputProps={{ min: "1", max: "5", step: "1" }} defaultValue={this.rate.value} onChange={this.handleRateChange} variant="outlined" label="Rating"/>
-				{/*<Slider color="secondary" width={200} defaultValue={30} aria-labelledby="discrete-slider" valueLabelDisplay="auto" step={1} min={1} max={5} onChange={this.handleRateChange}/>*/}
 				</p>
 
 				{/* Comment Input */}
@@ -90,8 +104,7 @@ class FeedbackFormular extends React.Component {
 				{/* Submit Button */}
 				<p>
 				<Button type="submit" value="absenden" variant="contained" color="Secondary"> Absenden </Button>
-				</p>			
-				<p className="App-intro"><small>{this.state.apiResponse}</small></p>
+				</p>							
 			</form>
 		)
 	}
