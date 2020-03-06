@@ -20,7 +20,7 @@ router.post("/SaveFormPost",function(req, res){
     var FormData = req.body.name + req.body.rate + req.body.comment;
     console.log(req.body);
     console.log("<<<Data recieved from client<<<")
-    SaveFile(" | " + req.body.name + " - " + req.body.rate + " - " + req.body.comment);
+    SaveFile(req.body.name + " - " + req.body.rate + " - " + req.body.comment + " | ");
     //SaveFile("Hi");
     res.end();
 });
@@ -30,9 +30,10 @@ router.get("/ShowData", function(req, res){
     console.log(">>>Sending Data>>>");
 });
 
-router.get("/Delete", function(req, res, next) {
-    res.send("API: FormDeletion");
+router.post("/Delete", function(req, res, next) {
+    console.log(req.body.message);
     DeleteFile();
+    res.end();
 });
 
 function SaveFile (data)
@@ -45,9 +46,9 @@ function SaveFile (data)
 
 function DeleteFile ()
 {
-    fs.write("./Feedback.txt", "",function (err) {
+    fs.writeFile("./Feedback.txt", " ", function (err) {
         if (err) throw err;
-        console.log("-File deleted.-");
+        console.log(">>>File Deleted.<<<");
     });
 }
 

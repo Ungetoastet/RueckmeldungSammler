@@ -3,20 +3,29 @@ import './index.css';
 import { Button } from '@material-ui/core';
 
 export default class Leiter extends React.Component {
-	callAPIForDelete(event) {
-		fetch("http://localhost:2999/testAPI/Delete")
-			.then(res => res.text())
-			.then(res => this.setState({ apiResponse: res }))
-			.catch(err => err);
+	callAPIForDelete() {
+		fetch("http://localhost:2999/testAPI/Delete", {
+			method: "POST",
+			headers: {
+				"Accept": "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				message: "Result deletion request"
+			}),
+		});
+		setTimeout(function(){
+			alert("Die Datei wurde gelöscht.");	
+		}, 500);
 	}
 	callAPIForOpening = () => {
-		fetch('http://localhost:8080/employees/download')
+		fetch('http://localhost:2999/testAPI/ShowData')
 			.then(response => {
 				response.blob().then(blob => {
 					let url = window.URL.createObjectURL(blob);
 					let a = document.createElement('a');
 					a.href = url;
-					a.download = 'employees.json';
+					a.download = "Mitarbeiter_Feedback.txt";
 					a.click();
 				});
 			})

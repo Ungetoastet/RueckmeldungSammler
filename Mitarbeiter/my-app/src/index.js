@@ -31,7 +31,7 @@ class FeedbackFormular extends React.Component {
 
  	handleSubmit(event) {
     	event.preventDefault();	
-		this.callAPIForSave();	
+		this.callAPIForSave();			
   	}
 	
 	callAPI() {
@@ -58,7 +58,10 @@ class FeedbackFormular extends React.Component {
 				comment: this.comment.value,
 			}),
 		})
-		}
+		setTimeout(function(){
+			alert("Deine Rückmeldung wurde erfolgreich übermittelt!");	
+		}, 500);
+	}
 
 	UNSAFE_componentWillMount() {
 		this.callAPI();
@@ -114,12 +117,5 @@ ReactDOM.render([
 	],
 	document.getElementById('root')
 );
-
-export function callAPIForDelete() {
-	fetch("http://localhost:2999/testAPI/Delete")
-		.then(res => res.text())
-		.then(res => this.setState({ apiResponse: res }))
-		.catch(err => err);
-}
 
 export default FeedbackFormular
